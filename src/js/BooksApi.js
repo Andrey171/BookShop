@@ -1,8 +1,9 @@
 const apiKey = "AIzaSyCOodDbg2KraWyfcmwGP9sKAdMxEO9J8XM"; 
 let startIndex = 0;
 let active_category = "Architecture";
-let busket_primer = 0;
-let storagelocal = [];
+
+let parseStorageData = JSON.parse(localStorage.getItem('add')) ?? [];
+
 fetchBooks();
    
 
@@ -67,7 +68,7 @@ function fetchBooks(){
                             </div> 
                             <p class="description">${description}</p>
                             <p class="price">${price}</p>
-                            <button data-number="${book.id}" class ="button-buy ">${storagelocal.includes(book.id)? "IN THE CART":"BUY NOW"}</button>
+                            <button data-number="${book.id}" class ="button-buy ">${parseStorageData.includes(book.id)? "IN THE CART":"BUY NOW"}</button>
                             
                         </div>
                     `;
@@ -78,7 +79,16 @@ function fetchBooks(){
 
 
 document.addEventListener('DOMContentLoaded', () => {
-
+    let number_busket = document.querySelector(".number-busket");
+    function number_busket_update() {
+        number_busket.innerText = parseStorageData.length;
+        if (parseStorageData.length > 0) {
+            number_busket.style.display = 'block'; 
+        } else {
+            number_busket.style.display = 'none'; 
+        }
+    }
+    number_busket_update();
     const category_list = document.querySelectorAll(".category");
 
     category_list.forEach(item =>{
@@ -97,22 +107,20 @@ document.addEventListener('DOMContentLoaded', () => {
         startIndex+=6;
         fetchBooks();
     });
-
+    
     document.addEventListener('click', (event) => {
         if(event.target.classList.contains('button-buy')){
-            let number_busket = document.querySelector(".number-busket");
             let id = event.target.dataset.number;
             if (event.target.textContent === 'BUY NOW') {
                 event.target.textContent = 'IN THE CART';
-                busket_primer+=1;
-                storagelocal.push(id);
+                parseStorageData.push(id); 
             }else { 
                 event.target.textContent = 'BUY NOW';
-                busket_primer-=1;
-                storagelocal.splice(storagelocal.indexOf(id), 1);
+                parseStorageData.splice(parseStorageData.indexOf(id), 1);
             }
-            number_busket.textContent=busket_primer; 
-            number_busket= number_busket.textContent == 0 ? number_busket.style.display = "none": number_busket.style.display = "inline";
+            number_busket_update();
+            localStorage.setItem("add", JSON.stringify(parseStorageData));
+            console.log(localStorage);
         }
         
     })
