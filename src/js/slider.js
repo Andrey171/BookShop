@@ -1,8 +1,3 @@
-// export function Slider() {
-//     initImages()    
-// }
-
-// export default function Slider(){
 let Banner = [{
     url:"/img/banner_one.png"
 },
@@ -20,8 +15,6 @@ const wordPicture = document.querySelector(".picture_word");
 const dots = document.querySelector(".dots_slider");
 
 initImages();
-// dots_slider();
-// initAutoplay();
 
 function initImages() {
     Banner.forEach((image, index) => {
