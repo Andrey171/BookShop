@@ -26,14 +26,12 @@ function fetchBooks(){
                 const authors =  book.volumeInfo.authors ? book.volumeInfo.authors: ''; 
                 const title = book.volumeInfo.title? book.volumeInfo.title: '';
                 let description = book.volumeInfo.description ? book.volumeInfo.description : '';
-                // const rating = book.saleInfo.listPrice? (book.saleInfo.listPrice.amount /10)+"%": "40%";
                 const rating = Math.random().toFixed(1) * (100 - 1) + 1 +"%";
                 const ratingsCount = book.volumeInfo.ratingsCount? book.volumeInfo.ratingsCount +"m rating": '';
                 const maxLength = 100; 
                 if (description.length > maxLength) {
                     description = description.substring(0, maxLength) + '...';
                 }
-                // const price = `${book.saleInfo.listPrice.amount} ${book.saleInfo.listPrice.currencyCode}`;
                 const price =book.saleInfo && book.saleInfo.listPrice && book.saleInfo.listPrice.amount ? `${book.saleInfo.listPrice.amount} ${book.saleInfo.listPrice.currencyCode}` : '';  
                 
                 
